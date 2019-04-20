@@ -1,0 +1,6 @@
+﻿using System.Collections;using System.Collections.Generic;using UnityEngine;public class GameSession : MonoBehaviour {    private GameClock gameClock;    private TetrominoManager tetrominoManager;    private ScoreKeeper scoreKeeper;    private Board board;	void Start () {        gameClock = GetComponent<GameClock>();        tetrominoManager = GetComponent<TetrominoManager>();        scoreKeeper = GetComponent<ScoreKeeper>();        board = transform.Find("Board").GetComponent<Board>();	}    public void Begin()    {        ShowSessionText();        tetrominoManager.IsActive = true;        gameClock.IsActive = true;    }    public void Pause()    {        tetrominoManager.IsActive = false;        gameClock.IsActive = false;    }    public void Resume()    {        tetrominoManager.IsActive = true;        gameClock.IsActive = true;    }    public void EndGame()    {        Pause();    }    public void LevelUp()    {        gameClock.SpeedUp(scoreKeeper.LinesCleared);    }    void ShowSessionText()
+    {
+        GameObject[] text = GameObject.FindGameObjectsWithTag("Text");
+        foreach (GameObject obj in text)
+            obj.GetComponent<MeshRenderer>().sortingLayerName = "Text";
+    }}

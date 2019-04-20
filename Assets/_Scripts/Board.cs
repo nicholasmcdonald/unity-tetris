@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Board : MonoBehaviour {
-	private GameManager gameManager;
+    private TetrominoManager tetrominoManager;
 	private Block[,] grid;
 	private const int GRID_HEIGHT = 22;
 	private const int GRID_WIDTH = 10;
 	private List<int> completedRows;
 
 	void Start () {
-		gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
-		PrepareNewGame ();
-	}
-
-	public void PrepareNewGame() {
-		grid = new Block[GRID_HEIGHT, GRID_WIDTH];
-		foreach (Transform block in transform.Find("Blocks"))
-			Destroy (block.gameObject);
-	}
+		tetrominoManager = GameObject.FindGameObjectWithTag ("Session").GetComponent<TetrominoManager> ();
+        grid = new Block[GRID_HEIGHT, GRID_WIDTH];
+        foreach (Transform block in transform.Find("Blocks"))
+            Destroy(block.gameObject);
+    }
 
 	/* Gather occupancy information for movement target */
 	public bool[,] CreateTestGrid(Vector2 coordinates) {
@@ -53,9 +49,9 @@ public class Board : MonoBehaviour {
 		FindCompleteRows ();
 		FlashBlocks ();
 		if (completedRows.Count > 0) {
-			gameManager.ActivateAnimationMode ();
+			//gameManager.ActivateAnimationMode ();
 		} else {
-			gameManager.ActivatePlacementMode ();
+			//gameManager.ActivatePlacementMode ();
 		}
 	}
 
@@ -67,7 +63,8 @@ public class Board : MonoBehaviour {
 	}
 
 	public void DestroyRows() {
-		gameManager.IncreaseLinesCleared (completedRows.Count);
+		// gameSession.ScoreKeeper.RegisterScore (completedRows.Count);
+        // Tell TetrominoManager instead
 		foreach (int row in completedRows) {
 			for (int column = 0; column < GRID_WIDTH; column++) {
 				Destroy (grid [row, column].gameObject);

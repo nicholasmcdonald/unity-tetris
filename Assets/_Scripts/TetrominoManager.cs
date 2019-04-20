@@ -11,12 +11,12 @@ public class TetrominoManager : MonoBehaviour {
 	private Tetromino nextTetromino;
 	private bool fastDropBlocked = false;
 
-	public void PrepareNewGame() {
-		ClearTetrominoes ();
-		SpawnNext ();
-	}
+    private void Start()
+    {
+        SpawnNext();
+    }
 
-	public void MoveLaterally(KeyCode key) {
+    public void MoveLaterally(KeyCode key) {
 		if (key == KeyCode.LeftArrow)
 			activeTetromino.MoveLaterally (Vector2.left);
 		else if (key == KeyCode.RightArrow)

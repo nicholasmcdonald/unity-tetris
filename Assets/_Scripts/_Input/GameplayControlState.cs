@@ -11,14 +11,23 @@ public class GameplayControlState : MonoBehaviour, ControlObserver {
 	private Timer timer;
 	private bool arrowKeyHeld = false;
 
-	void Start() {
-		GameObject gm = GameObject.FindGameObjectWithTag ("GameManager");
-		gameManager = gm.GetComponent<GameManager> ();
-		tetrominoManager = gm.GetComponent<TetrominoManager> ();
-		timer = GameObject.FindGameObjectWithTag ("GameClock").GetComponent<GameClock> ().GetNewTimer ();
-		timer.SetTimeout (LONG_PRESS_LATERAL);
-		activeArrowKey = KeyCode.None;
-	}
+    public void Init()
+    {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        GameObject session = gameManager.transform.Find("Session").gameObject;
+        tetrominoManager = session.GetComponent<TetrominoManager>();
+        timer = session.GetComponent<GameClock> ().GetNewTimer ();
+        timer.SetTimeout (LONG_PRESS_LATERAL);
+        activeArrowKey = KeyCode.None;
+    }
+
+    public void Close()
+    {
+        gameManager = null;
+        tetrominoManager = null;
+        timer = null;
+        arrowKeyHeld = false;
+    }
 
 	public void Notify(Dictionary<KeyCode, KeyState> inputs) {
 		HandleEscKey (inputs);

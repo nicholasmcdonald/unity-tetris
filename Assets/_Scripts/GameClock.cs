@@ -13,10 +13,6 @@ public class GameClock : MonoBehaviour {
 	private const float ANIMATION_TICK = 20.0f;
 	private bool useAnimationTimer = false;
 
-	void Start() {
-		IsActive = false;
-	}
-
 	void Update () {		
 		if (IsActive) {
 			timer++;
@@ -33,12 +29,6 @@ public class GameClock : MonoBehaviour {
 				}
 			}
 		}
-	}
-
-	public void PrepareNewGame() {
-		BeginGravity ();
-		ResetTickRate ();
-		IsActive = true;
 	}
 
 	public void BeginAnimation() {
